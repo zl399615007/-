@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #outer{
+            width: 500px;
+            height: 270px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        #inner{
+            width: 2500px;
+            height: 270px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #inner div{
+            width: 500px;
+            height: 270px;
+            background: black;
+            text-align: center;
+            line-height: 270px;
+            font-size: 100px;
+            color: white;
+            float: left;
+        }
+        #btn{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: 50px;
+            width: 300px;
+            position: absolute;
+            right: 60px;
+            bottom: 30px;
+
+        }
+        #btn li{
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            margin: 10px;
+            text-align: center;
+            line-height: 30px;
+            background:green;
+            float: left;
+            cursor: pointer;
+        }
+        #btn .promoted{
+            background: #cccccc;
+        }
+        .left{
+            width: 50px;
+            height: 50px;
+            background: #cccccc;
+            margin-top: 100px;
+            float: left;
+
+        }
+        .right{
+            width: 50px;
+            height: 50px;
+            background: #cccccc;
+            float: right;
+            margin-top: 100px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div class="left">left</div>
+    <div class="right">right</div>
+    <div id="inner">
+
+        <div>一</div>
+        <div style="background: orange">二</div>
+        <div style="background: pink">三</div>
+        <div style="background: lightblue">四</div>
+        <div style="background: goldenrod">五</div>
+    </div>
+    <ul id="btn">
+        <li class="promoted">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</div>
+
+<script src="动画库.js"></script>
+<script>
+ var oDiv=document.getElementById("inner").getElementsByTagName("div")[0];
+    inner.appendChild(oDiv.cloneNode(true));
+    inner.style.width=inner.offsetWidth+oDiv.offsetWidth+"px";
+
+    var oLis=document.getElementById("btn").getElementsByTagName("li");
+    for(var i=0;i<oLis.length;i++){
+        oLis.item(i).n=i;
+        oLis[i].onclick=function(){
+            animate(inner,{left:this.n*-500},800);
+            step=this.n;
+            current(step);
+            clearInterval(autoTimer);
+            autoTimer=window.setTimeout(function(){
+                autoTimer=window.setInterval(autoMove,1000)
+            },2000)
+        }
+    }
+
+    var step=0;
+    function autoMove(){
+        step++;
+        if(step>=6){
+            inner.style.left=0;
+            step=1
+        }
+        if(step==5){
+            current(0)
+        }else{
+            current(step)
+        }
+        animate(inner,{left:step*-500},800,4)
+    }
+    var autoTimer=window.setInterval(autoMove,1000);
+
+    function current(n){
+        for(var i=0;i<oLis.length;i++){
+            oLis[i].className=""
+        }
+        oLis[n].className="promoted"
+
+    }
+
+    var left=document.getElementsByClassName("left")[0];
+    var right=document.getElementsByClassName("right")[0];
+
+    var n=0;
+    left.onclick=function(){
+        n++;
+        j=n;
+        if(n==6){
+            inner.style.left=0;
+            n=1;
+        }
+        if(n==5){
+            current(0)
+        }
+        if(n<5){
+            current(n)
+        }
+        animate(inner,{left:n*-500},800)
+    };
+
+ var j=5;
+    right.onclick=function(){
+        j--;
+        n=j;
+        if(j<0){
+            inner.style.left="-2500px";
+            j=4;
+        }
+        animate(inner,{left:j*-500},800);
+        current(j)
+
+
+    }
+
+
+
+
+
+</script>
+
+</body>
+</html>

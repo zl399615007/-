@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>格式时间字符串</title>
+</head>
+<body>
+<script>
+var str="2016-3-21 11:21:00";
+var a=str.split(/-+|:+| +/g)
+
+var mStr="{0}年{1}月{2}日 {3}时{4}分{5}秒";
+var reg=/{(\d+)}/g;
+console.log(mStr.replace(reg,function(){
+    var num=arguments[1];
+    var val=a[num];
+    val<10?"0"+val:null;
+    return val;
+}))
+
+
+
+</script>
+</body>
+</html>
