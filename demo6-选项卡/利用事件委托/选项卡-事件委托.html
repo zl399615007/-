@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-user-select: none;
+        }
+
+        .tabbedpannels {
+            overflow: hidden;
+            width: 600px;
+            margin: 40px auto;
+
+        }
+
+        .tabbedpannels ul.tabGroup {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tabbedpannels li.tab {
+            width: 100px;
+            height: 40px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+            float: left;
+            background: lightblue;
+            text-align: center;
+            line-height: 40px;
+        }
+
+        .tabbedpannels div.content {
+            clear: both;
+            height: 200px;
+            width: 600px;
+            background: #cccccc;
+            display: none;
+        }
+
+        .tabbedpannels div.content.selectedContent {
+            display: block;
+            background: darkgoldenrod;
+        }
+
+        .tabbedpannels li.tab.selectedTab {
+            background: darkgoldenrod;
+            font-weight: bold;
+        }
+
+        .promoted {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="tabbedpannels">
+    <ul class="tabGroup" >
+        <li class="tab selectedTab">1</li>
+        <li class="tab promoted">2</li>
+        <li class="tab">3</li>
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一</div>
+        <!--<ul>-->
+        <!--<li>js</li>-->
+        <!--<li>html</li>-->
+        <!--</ul>-->
+        <div class="content">内容二</div>
+        <div class="content">内容三</div>
+    </div>
+</div>
+<div class="tabbedpannels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab">1</li>
+        <li class="tab promoted">2</li>
+        <li class="tab">3</li>
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一</div>
+
+        <div class="content">内容二</div>
+        <div class="content">内容三</div>
+    </div>
+</div>
+<div class="tabbedpannels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab">1</li>
+        <li class="tab promoted">2</li>
+        <li class="tab">3</li>
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一</div>
+
+        <div class="content">内容二</div>
+        <div class="content">内容三</div>
+    </div>
+</div>
+<div class="tabbedpannels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab">1</li>
+        <li class="tab  promoted">2</li>
+        <li class="tab ">3</li>
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一</div>
+
+        <div class="content">内容二</div>
+        <div class="content">内容三</div>
+    </div>
+</div>
+<div class="tabbedpannels">
+    <ul class="tabGroup">
+        <li class="tab selectedTab">1</li>
+        <li class="tab promoted">2</li>
+        <li class="tab">3</li>
+    </ul>
+    <div class="contentGroup">
+        <div class="content selectedContent">内容一</div>
+
+        <div class="content">内容二</div>
+        <div class="content">内容三</div>
+    </div>
+</div>
+<script src="Dom.js"></script>
+<script>
+
+
+ document.documentElement.onclick=function(e){
+     //根据事件源做判断：如果事件源li并且类名是tab，则认为这是选项卡
+     e=e||window.event;
+     target= e.target|| e.srcElement;//标准浏览器和IE浏览器的事件源属性不一样，前者是标准浏览器，后者是IE
+
+     var reg=/(^|)tab( |$)/;
+     if(target.tagName=="LI"&&reg.test(target.className)){
+         changeTab.call(target)
+     }
+
+ };
+
+
+ function changeTab(){
+     var n=Dom.getIndex(this);
+     Dom.addClass(this,"tab selectedTab");
+     var siblings=Dom.siblings(this);
+     for(var i=0;i<siblings.length;i++){
+         Dom.removeClass(siblings[i],"selectedTab");
+     }
+     var content=Dom.children(Dom.next(this.parentNode),"div");
+     for(var i=0;i<content.length;i++){
+         Dom.removeClass(content[i],"selectedContent");
+     }
+     Dom.addClass(content[n],"content selectedContent");
+ }
+</script>
+</body>
+</html>
