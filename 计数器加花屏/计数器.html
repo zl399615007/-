@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>计数器</title>
+    <style type="text/css">
+        #div1{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 1px solid green;
+            cursor: pointer;
+            line-height: 100px;
+            text-align: center;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script>
+    var oDiv=document.getElementById("div1");
+
+//    var i=0;
+//        oDiv.onclick=function(){
+//            oDiv.innerHTML=++i;
+//        };   不推荐，把变量定义在全局下会变量污染
+
+    //第一种
+    ;(function(){
+        var i=0;
+        oDiv.onclick=function(){ //匿名方法被元素的onclick所占用，因此自执行函数的作用域就释放不掉了
+            oDiv.innerHTML=++i;
+        };
+    })();
+
+
+    //第二种
+    oDiv.onclick=(function(){
+      var i=0;
+        return function(){
+            oDiv.innerHTML=++i;
+        }
+
+    })();
+
+
+
+    //第三种
+    oDiv.onclick=(function(){
+        var a=0;
+        var b=[];
+        return function(){
+            fn(a,b);
+            a=b[0];
+        }
+
+    })();
+
+    function fn(i,arr){
+        //形参仅仅在当前这个作用域有值，跟其他作用域都没有关系
+        //方法的私有变量（形参，带var关键字的变量，方法里定义方法也是私有变量）
+        oDiv.innerHTML=++i;
+        arr[0]=i;
+    }
+
+
+
+</script>
+</body>
+</html>

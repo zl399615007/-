@@ -1,0 +1,36 @@
+
+  $.ajax({
+                // 请求的路径
+                url:'',
+                // 是否为异步
+                async:true,
+                // 在执行ajax的send方法之前 执行此函数；开启loading效果
+                beforeSend:function(){},
+                // 缓存 默认为走缓存
+                cache:true,
+                // 不管成功还是失败，都会执行此函数；关闭loading效果
+                complete:function(){},
+                // 设置请求的mimeType
+                contentType:'application/x-www-form-urlencoded',
+                // success、error、complete这三个函数里的上下文对象
+                context:{},
+                // 往服务器发送的数据
+                data:{},
+                // 数据格式
+                dataType:'text',
+                // 当失败的时候就会执行此函数
+                error:function(errInfo){},
+                // 当成功的时候就会执行此函数
+                success:function(data){},
+                // 自定义请求首部
+                headers:{},
+                // 使用什么http方法，1.9之前使用type，1.9之后使用method
+                type:'GET',
+                // 重写响应的mimeType
+                mimeType:'',
+                // 是否格式化参数为uri string
+                // 当data为二进制或者formData的时候，需要设置为false
+                processData:true,
+                // 设置的超时毫秒数，默认为0表示不执行超时逻辑
+                timeout:0
+            });

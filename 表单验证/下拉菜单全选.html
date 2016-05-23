@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<select multiple name="select1">
+    <option>111</option>
+    <option>222</option>
+    <option>333</option>
+    <option>444</option>
+</select>
+<input name="all" value="全选" type="checkbox">全选/全不选
+<script>
+    var sele=document.getElementsByName("select1")[0];
+    var oInput=document.getElementsByName("all")[0];
+    oInput.onchange=function (){
+
+
+            for(var i=0;i<sele.options.length;i++){
+                sele.options[i].selected=this.checked;
+            }
+        if(this.checked){
+
+            this.nextSibling.nodeValue="全不选"
+        }else{
+            this.nextSibling.nodeValue="全选"
+        }
+
+
+    }
+
+</script>
+</body>
+</html>

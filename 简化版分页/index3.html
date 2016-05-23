@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            -webkit-user-select: none;
+        }
+        table,tr,td,th{
+            border: 1px solid blue;
+            border-collapse: collapse;
+
+        }
+        th,td{
+            width: 80px;
+            text-align: center;
+            margin: 3px;
+        }
+        #nav span{
+            float: left;
+            width: 50px;
+            text-align: center;
+            margin: 5px;
+            background: lightblue;
+            cursor: pointer;
+        }
+        #nav span.current{
+            background: olive;
+
+        }
+
+    </style>
+</head>
+<body>
+<div id="content"></div>
+<script>
+    var xhr=new XMLHttpRequest();
+    xhr.open("get","data.txt",true);
+    xhr.send();
+    xhr.onreadystatechange=function (){
+        if(xhr.readyState==4&&xhr.status==200){
+            var data=xhr.responseText;
+            init(data,5);
+        }
+    };
+
+    function init(data,recordNum){
+        var currentPage=0;
+        var a=JSON.parse(data);
+        var content=document.getElementById("content");
+        var oTable=document.createElement("table");
+        content.appendChild(oTable);
+        var oHead=document.createElement("thead");
+        oTable.appendChild(oHead);
+        var oTr=document.createElement("tr");
+        oHead.appendChild(oTr);
+        var oTbody=document.createElement("tbody");
+        oTable.appendChild(oTbody);
+        for(var attr in a[0]){
+            oTr.innerHTML+="<th>"+attr+"</th>";
+        }
+
+        var totalPage=Math.ceil(a.length/recordNum);
+        showPage(0);
+        var nav=document.createElement("div");
+        nav.id="nav";
+        content.appendChild(nav);
+        var oTotal=document.createElement("span");
+        nav.appendChild(oTotal);
+        oTotal.innerHTML="总"+totalPage+"页";
+        var oPrev=document.createElement("span");
+        nav.appendChild(oPrev);
+        oPrev.innerHTML="上一页";
+        oPrev.onclick=prevPage;
+        var container=document.createElement("div");
+        container.id="container";
+        nav.appendChild(container);
+        for(var i=0;i<totalPage;i++){
+            var oPage=document.createElement("span");
+            oPage.innerHTML="第"+(i+1)+"页";
+            oPage.onclick=function (e){
+                showPage(currentPage=this.innerHTML.match(/\d+/)[0]-1)
+            };
+            container.appendChild(oPage);
+            if(!i)oPage.className="current"
+        };
+
+        var oNext=document.createElement("span");
+        nav.appendChild(oNext);
+        oNext.innerHTML="下一页";
+        oNext.onclick=nextPage;
+
+        function showPage(n){//显示当前页
+            oTbody.innerHTML="";
+            for(var i=recordNum*n;i<(n+1)*recordNum;i++){
+                var oTr=document.createElement("tr");
+                for(var attr in a[i]){
+                    var oTd=document.createElement("td");
+                    oTd.innerHTML=a[i][attr];
+                    oTr.appendChild(oTd);
+                }
+                oTbody.appendChild(oTr);
+            }
+
+            if(container){
+                var eles=container.getElementsByTagName("span");
+                if(eles.length){
+                    for(var i=0;i<eles.length;i++){
+                        eles[i].className="";
+                    }
+                    eles[n].className="current";
+                }
+            };
+
+        };
+        function prevPage(){
+            if(currentPage-1>=0){
+                showPage(--currentPage);
+            }
+
+        };
+        function nextPage(){
+            if(currentPage+1<=totalPage-1){
+                showPage(++currentPage);
+            }
+        }
+
+
+    }
+
+</script>
+</body>
+</html>

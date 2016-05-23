@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+   DOTA: <input type="checkbox" name="hobby" value="DOTA">DOTA <br>
+   LOL: <input type="checkbox" name="hobby" value="LOL">LOL <br>
+   WOW: <input type="checkbox" name="hobby" value="WOW">cf <br>
+</div>
+<p> 全选/全不选 <input type="checkbox" name="button" id="btn"></p>
+<script>
+    var oBtn=document.getElementsByName("button")[0];
+    var oInput=document.getElementsByName("hobby");
+    oBtn.onclick=function (){
+        for(var i=0;i<oInput.length;i++){
+            oInput[i].checked=this.checked;
+        }
+
+    }
+
+
+
+</script>
+</body>
+</html>

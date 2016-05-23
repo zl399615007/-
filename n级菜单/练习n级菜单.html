@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #menu,#menu li{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        #menu li{
+            width: 130px;
+            margin: 10px;
+
+        }
+        #menu span{
+            display: block;
+            width: 180px;
+            background: green;
+            border: 1px solid #cccccc;
+            overflow: hidden;
+        }
+
+        #menu span.open,#menu span.close{
+            background: lightblue;
+        }
+        #menu span.open::before{
+            content: "-";
+            font-size: 24px;
+            color: red;
+        }
+
+        #menu span.close::before{
+            content: "+";
+            font-size: 24px;
+            color: red;
+
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div>
+    <ul id="menu">
+        <li>
+            <span>第一级</span>
+            <ul>
+                <li><span>第二级</span></li>
+                <li> <span>第二级</span></li>
+                <li> <span>第二级</span></li>
+                <li> <span>第二级</span></li>
+            </ul>
+
+        </li>
+        <li> <span>第一级</span>
+            <ul>
+                <li><span>第二级</span>
+                    <ul>
+                        <li><span>第二级</span></li>
+                        <li> <span>第二级</span></li>
+                        <li> <span>第二级</span></li>
+                        <li> <span>第二级</span></li>
+                    </ul>
+                </li>
+                <li> <span>第二级</span>
+                    <ul>
+                        <li><span>第二级</span>
+                            <ul>
+                                <li><span>第二级</span>
+                                    <ul>
+                                        <li><span>第二级</span></li>
+                                        <li> <span>第二级</span></li>
+                                        <li> <span>第二级</span></li>
+                                        <li> <span>第二级</span></li>
+                                    </ul>
+                                </li>
+                                <li> <span>第二级</span></li>
+                                <li> <span>第二级</span></li>
+                                <li> <span>第二级</span></li>
+                            </ul>
+                        </li>
+                        <li> <span>第二级</span></li>
+                        <li> <span>第二级</span></li>
+                        <li> <span>第二级</span></li>
+                    </ul>
+                </li>
+                <li> <span>第二级</span></li>
+                <li> <span>第二级</span></li>
+            </ul>
+        </li>
+        <li> <span>第一级</span>
+        </li>
+        <li> <span>第一级</span>
+        </li>
+        <li> <span>第一级</span>
+            <ul>
+                <li><span>第二级</span>
+                    <ul>
+                        <li><span>第二级</span>
+                            <ul>
+                                <li><span>第二级</span></li>
+                                <li> <span>第二级</span></li>
+                                <li> <span>第二级</span></li>
+                                <li> <span>第二级</span></li>
+                            </ul>
+                        </li>
+                        <li> <span>第二级</span></li>
+                        <li> <span>第二级</span></li>
+                        <li> <span>第二级</span></li>
+                    </ul>
+                </li>
+                <li> <span>第二级</span></li>
+                <li> <span>第二级</span></li>
+                <li> <span>第二级</span></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+    <script src="Dom.js"></script>
+<script>
+    var oLis=document.getElementById("menu").getElementsByTagName("li");
+    for(var i=0;i<oLis.length;i++){
+        var oLi=oLis[i];
+        if(oLi.getElementsByTagName("ul").length){
+            oLi.children[1].style.display="none";
+            oLi.children[0].className="close";
+        }
+    }
+    document.getElementById("menu").onclick=function(e){
+        e=e||window.event;
+        var target= e.target|| e.srcElement;
+        if(target.tagName=="SPAN"){
+            var oUl=Dom.next(target);
+            if(oUl){
+                if(oUl.style.display=="block"){
+                    oUl.style.display="none";
+                    target.className="close";
+                }else{
+                    oUl.style.display="block";
+                    target.className="open"
+                }
+                var oUls=oUl.getElementsByTagName("ul");
+                for(var i=0;i<oUls.length;i++){
+                    var oul=oUls[i];
+                    oul.style.display="none";
+                    Dom.prev(oul).className="close"
+                }
+            }
+        }
+    }
+
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+*{
+    margin:0;
+    padding: 0;
+}
+#outer{
+    width: 500px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    margin:5px auto;
+}
+#inner{
+    position: absolute;
+    overflow: hidden;
+    width:500px;/*宽度>=500，没影响，在js中会重新设置*/
+    height: 300px;
+    left:-500px;
+    top:0;
+}
+#inner div{
+    width: 500px;
+    height: 300px;
+    float: left;
+    background: url("../img/default.gif") no-repeat center;
+}
+#inner div img{
+    width: 100%;
+    height: 100%;
+}
+#tips{
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    width: 160px;
+    height: 25px;
+    list-style: none;
+    overflow: hidden;
+}
+#tips li{
+    width:25px;
+    height: 25px;
+    background: #ccc;
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+#tips li.select{/*li.select  注意：点和li不能有空格，否则不行*/
+    background: palevioletred;
+}
+#bannerLeft, #bannerRight{
+    display: none;
+    width: 35px;
+    height: 50px;
+    background: url("../img/pre.png") no-repeat 0 0;
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+#bannerLeft{
+    left:20px;
+}
+#bannerRight{
+    right: 20px;
+    background-position: -50px 0;
+}
+#bannerLeft:hover,#bannerRight:hover{
+    opacity:0.8;
+    filter:alpha(opacity=80);
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>
+    <input value="哈哈哈" id="input1">
+</p>
+</body>
+<script>
+
+    //修正信息重复提示
+        var oInput = document.getElementById("input1");
+        oInput.onfocus = function () {
+            if (this.value == this.defaultValue) {
+                this.value = "";
+            }
+        };
+        oInput.onblur = function () {
+            var reg = / +/g;    //整理字符串中的空格
+            var oSpan = document.getElementById("message");
+            if (!this.value.replace(reg, "").length) {//判断是否输入内容
+                this.value = this.defaultValue;
+                if (!oSpan) {
+                    var oSpan = document.createElement("span");
+                    oSpan.id = "message";
+                    oSpan.innerHTML = "请输入";
+                    oSpan.style.color = "red";
+                    oSpan.style.fontWeight = "bold";
+                    this.parentNode.appendChild(oSpan);
+                } else {
+                    oSpan.innerHTML = "请输入";
+                }
+            } else {
+                this.value = this.value.replace(reg, "");
+                if (!oSpan) {
+                    var oSpan = document.createElement("span");
+                    oSpan.id = "message";
+                    oSpan.innerHTML = "OK";
+                    oSpan.style.color = "green";
+                    oSpan.style.fontWeight = "bold";
+                    this.parentNode.appendChild(oSpan);
+                } else {
+                    oSpan.innerHTML = "输入正确";
+                    oSpan.style.color = "green";
+                }
+            }
+        };
+
+
+
+</script>
+</html>

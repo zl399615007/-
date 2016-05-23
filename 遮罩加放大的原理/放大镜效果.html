@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #content{
+            width: 300px;
+            height: 223px;
+            background: url("smallPeony.jpg");
+            margin: 50px auto;
+            position: relative;
+            cursor: move;
+        }
+        #mask{
+            background: green;
+            opacity: 0.5;
+            position: absolute;
+        }
+
+        #show{
+            position: absolute;
+            width: 300px;
+            height: 223px;
+
+            overflow: hidden;
+            top: 0;
+            left: 310px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="content"></div>
+
+</body>
+<script>
+//    小图300*223
+//    大图950*706
+//    假定放大区：300*223，求遮罩大小
+//    遮罩/小图=放大区/大图
+    var scaleX=300/950;
+    var scaleY=223/706;
+    var content=document.getElementById("content");
+    content.onmouseenter=function(e){
+        e=e||window.event;
+        var w=300*scaleX;
+        var h=223*scaleY;
+        var oMask=document.createElement("div");
+        oMask.id="mask";
+        with (oMask.style){
+            left= e.pageX-this.offsetLeft+"px";
+            top= e.pageY-this.offsetTop+"px";
+            height=h+"px";
+            width=w+"px";
+    }
+        this.appendChild(oMask);
+        //以下是放大区
+        var oShow=document.createElement("div");
+        oShow.id="show";
+        var oImg=document.createElement("img");
+        oImg.src="peony.jpg";
+        oShow.appendChild(oImg);
+        this.appendChild(oShow);
+
+    }
+content.onmousemove=function(e){
+    var oMask=document.getElementById("mask");
+
+    if(oMask){
+        var l=e.pageX-this.offsetLeft-oMask.offsetWidth/2;
+        var t=e.pageY-this.offsetTop-oMask.offsetHeight/2;
+        var maxL=this.offsetWidth-oMask.offsetWidth;
+        var maxT=this.offsetHeight-oMask.offsetHeight;
+        var oShow=document.getElementById("show");
+        with (oMask.style){
+
+//            left=e.pageX-this.offsetLeft-oMask.offsetWidth/2;
+//            top= e.pageY-this.offsetTop-oMask.offsetHeight/2;
+           if(l<=0){
+               left=0;
+           }else if(l>=maxL){
+               left=maxL+"px";
+           }else{
+               left=l+"px";
+               oShow.scrollLeft=l/scaleX;//控制放大显示区水平移动
+           }
+            if(t<=0){
+                top=0;
+            }else if(t>=maxT){
+                top=maxT+"px";
+            }else{
+                top=t+"px";
+                oShow.scrollTop=t/scaleY;//控制放大显示区垂直移动
+            }
+    }
+}
+};
+
+
+    content.onmouseleave=function(e){
+        var oMask=document.getElementById("mask");
+        if(oMask){
+            this.removeChild(oMask);
+        }
+        var oShow=document.getElementById("show");
+        if(oShow){
+            this.removeChild(oShow);
+        }
+    }
+
+
+</script>
+</html>
